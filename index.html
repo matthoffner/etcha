@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <base href="/" />
+  </head>
+  <body>
+    <div>
+      <div id="root" />
+    </div>
+    <div>
+      <pre id="editor" contenteditable="true">
+import { React, ReactDOM } from "https://unpkg.com/es-react-rc";
+
+ReactDOM.render(React.createElement('h2', {}, 'minicode'), document.getElementById("root"));
+</pre
+      >
+    </div>
+    <script type="module">
+      setInterval(() => {
+        const savedCode = document.getElementById("editor").textContent;
+        const encodedJs = encodeURIComponent(savedCode);
+        const dataUri = "data:text/javascript;charset=utf-8," + encodedJs;
+        import(dataUri);
+      }, 100);
+    </script>
+  </body>
+</html>
