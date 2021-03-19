@@ -2,6 +2,8 @@
 
 Super basic javascript live editor now with monacode.
 
+[Demo here](https://etcha.on.fleek.co)
+
 Basically this:
 
 ```js
