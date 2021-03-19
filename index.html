@@ -1,26 +1,79 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <base href="/" />
-  </head>
-  <body>
-    <div>
-      <div id="root" />
-    </div>
-    <div>
-      <pre id="editor" contenteditable="true">
-import React from "https://cdn.skypack.dev/react";
-import ReactDOM from "https://cdn.skypack.dev/react-dom";
-const Foo = React.createElement('div', { style: { backgroundColor: '#999', textAlign: 'center', borderRadius: '5px', padding: 200, border: '40px solid red' }}, 'etcha');
-ReactDOM.render(Foo, document.getElementById("root"));
-      </pre>
-    </div>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>etcha</title>
     <script type="module">
-      setInterval(() => {
-        const savedCode = document.getElementById("editor").textContent;
-        const encodedJs = encodeURIComponent(savedCode);
+
+      const search = new URLSearchParams(document.location.search.substring(1))
+      const overrides = Object.fromEntries(search);
+      const defaults = {
+          container: document.getElementById('editor'),
+          value: `
+          import React from "https://cdn.skypack.dev/react";
+import ReactDOM from "https://cdn.skypack.dev/react-dom";
+const Foo = React.createElement(
+  "div",
+  {
+    style: {
+      backgroundColor: "#999",
+      textAlign: "center",
+      borderRadius: "5px",
+      padding: 200,
+      border: "40px solid red",
+    },
+  },
+  "etcha"
+);
+ReactDOM.render(Foo, document.getElementById("root"));
+
+`.trim(),
+      }
+
+      import(window.location.hostname === "localhost"
+        ? "./index.js"
+        : "./index.min.js"
+      ).then(module => {
+        // Create a new editor and attatch to the document body
+        const editor = module.default({ ...defaults, ...overrides });
+        const initialValue = editor.getValue();
+        const encodedJs = encodeURIComponent(initialValue);
         const dataUri = "data:text/javascript;charset=utf-8," + encodedJs;
         import(dataUri);
-      }, 100);
+
+        // Listen for changes within the editor
+        editor.getModel().onDidChangeContent(change => {
+          const newValue = editor.getValue();
+          const encodedJs = encodeURIComponent(newValue);
+          const dataUri = "data:text/javascript;charset=utf-8," + encodedJs;
+          import(dataUri);
+        });
+
+      })
+
+
     </script>
+    <style>
+      body, #editor {
+        background: #1e1e1e;
+      }
+      #editor {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        right: 5vmin;
+        bottom: 5vmin;
+        left: 5vmin;
+        display: grid;
+        grid-gap: 5vmin;
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        grid-template-rows: repeat(auto-fit, minmax(20%, 1fr));
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="editor"></div>
   </body>
 </html>
