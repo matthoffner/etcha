@@ -13,7 +13,7 @@ import(dataUri);
 
 ## Credits
 
-* [monacode](https://monacode.live)
+* [monacode](https://github.com/lukejacksonn/monacode)
 
 ## License
 
