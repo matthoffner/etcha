@@ -13,20 +13,20 @@
           value: `
           import React from "https://cdn.skypack.dev/react";
 import ReactDOM from "https://cdn.skypack.dev/react-dom";
-const Foo = React.createElement(
-  "div",
-  {
-    style: {
-      backgroundColor: "#999",
-      textAlign: "center",
-      borderRadius: "5px",
-      padding: 200,
-      border: "40px solid red",
-    },
-  },
-  "etcha"
-);
-ReactDOM.render(Foo, document.getElementById("root"));
+import htm from "https://cdn.skypack.dev/htm";
+
+window.html = htm.bind(React.createElement);
+
+const Etcha = html\`<div style=\$\{{
+  backgroundColor: "#999",
+  textAlign: "center",
+  borderRadius: "5px",
+  padding: 200,
+  border: "40px solid red",
+}}>etcha</div>\`;
+
+ReactDOM.render(Etcha, document.getElementById("root"));
+
 
 `.trim(),
       }
