@@ -1,11 +1,13 @@
 # Etcha
 
-Super basic javascript live editor now with monacode, a modern version of monaco.
+Super basic javascript live editor now with monacode.
 
 Basically this:
 
 ```js
-const dataUri = `data:text/javascript;charset=utf-8,${encodedJs}"`
+const initialValue = editor.getValue();
+const encodedJs = encodeURIComponent(initialValue);
+const dataUri = "data:text/javascript;charset=utf-8," + encodedJs;
 import(dataUri);
 ```
 
