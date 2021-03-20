@@ -66,7 +66,7 @@ const Etcha = () => {
         default:
           break;
       }
-      ctx.fillRect(coords.horizontal, coords.vertical, 1, );
+      ctx.fillRect(coords.horizontal, coords.vertical, 1, 1);
       setActiveCoordinates({
         horizontal: coords.horizontal,
         vertical: coords.vertical,
@@ -84,7 +84,7 @@ const Etcha = () => {
     textAlign: "center",
     borderRadius: "5px",
     border: "40px solid red",
-  }}><canvas style=\${{ width: '100vw', display: 'block' }} ref=\${canvasRef}></canvas></div>\`;
+  }}><canvas style=\${{ width: '95vw', display: 'block' }} ref=\${canvasRef}></canvas></div>\`;
 };
 
 ReactDOM.render(html\`<\${Etcha} />\`, document.getElementById("root"));
