@@ -17,15 +17,78 @@ import htm from "https://cdn.skypack.dev/htm";
 
 window.html = htm.bind(React.createElement);
 
-const Etcha = html\`<div style=\$\{{
-  backgroundColor: "#999",
-  textAlign: "center",
-  borderRadius: "5px",
-  padding: 200,
-  border: "40px solid red",
-}}>etcha</div>\`;
+const Etcha = () => {
+  const KeyCodes = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+  const [coordinates, setCoordinates] = React.useState({
+    vertical: 130,
+    horizontal: 60,
+  });
+  const canvasRef = React.useRef(null);
+  const coordinatesRef = React.useRef(coordinates);
+  const setActiveCoordinates = (data) => {
+    coordinatesRef.current = data;
+    setCoordinates(data);
+  };
 
-ReactDOM.render(Etcha, document.getElementById("root"));
+  const handleKeyPress = (e) => {
+    if (KeyCodes.includes(e.key)) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#000000";
+      let coords = {};
+      switch (e.key) {
+        case "ArrowUp":
+          coords = {
+            horizontal: coordinatesRef.current.horizontal,
+            vertical: coordinatesRef.current.vertical - 5,
+          };
+          break;
+        case "ArrowDown":
+          coords = {
+            horizontal: coordinatesRef.current.horizontal,
+            vertical: coordinatesRef.current.vertical + 5,
+          };
+          break;
+        case "ArrowRight":
+          coords = {
+            horizontal: coordinatesRef.current.horizontal + 5,
+            vertical: coordinatesRef.current.vertical,
+          };
+          break;
+
+        case "ArrowLeft":
+          coords = {
+            horizontal: coordinatesRef.current.horizontal - 5,
+            vertical: coordinatesRef.current.vertical,
+          };
+          break;
+
+        default:
+          break;
+      }
+      ctx.fillRect(coords.horizontal, coords.vertical, 5, 5);
+      setActiveCoordinates({
+        horizontal: coords.horizontal,
+        vertical: coords.vertical,
+      });
+    }
+  };
+  React.useEffect(() => {
+    window.addEventListener("keyup", (e) => handleKeyPress(e), false);
+    return () =>
+      window.addEventListener("keyup", (e) => handleKeyPress(e), false);
+  }, []);
+
+  return html\`<div style=\${{
+    backgroundColor: "#999",
+    textAlign: "center",
+    borderRadius: "5px",
+    border: "40px solid red",
+  }}><canvas style=\${{ width: '100vw', display: 'block' }} ref=\${canvasRef}></canvas></div>\`;
+};
+
+ReactDOM.render(html\`<\${Etcha} />\`, document.getElementById("root"));
+
 
 
 `.trim(),
