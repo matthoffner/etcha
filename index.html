@@ -40,25 +40,25 @@ const Etcha = () => {
         case "ArrowUp":
           coords = {
             horizontal: coordinatesRef.current.horizontal,
-            vertical: coordinatesRef.current.vertical - 5,
+            vertical: coordinatesRef.current.vertical - 1,
           };
           break;
         case "ArrowDown":
           coords = {
             horizontal: coordinatesRef.current.horizontal,
-            vertical: coordinatesRef.current.vertical + 5,
+            vertical: coordinatesRef.current.vertical + 1,
           };
           break;
         case "ArrowRight":
           coords = {
-            horizontal: coordinatesRef.current.horizontal + 5,
+            horizontal: coordinatesRef.current.horizontal + 1,
             vertical: coordinatesRef.current.vertical,
           };
           break;
 
         case "ArrowLeft":
           coords = {
-            horizontal: coordinatesRef.current.horizontal - 5,
+            horizontal: coordinatesRef.current.horizontal - 1,
             vertical: coordinatesRef.current.vertical,
           };
           break;
@@ -66,7 +66,7 @@ const Etcha = () => {
         default:
           break;
       }
-      ctx.fillRect(coords.horizontal, coords.vertical, 5, 5);
+      ctx.fillRect(coords.horizontal, coords.vertical, 1, );
       setActiveCoordinates({
         horizontal: coords.horizontal,
         vertical: coords.vertical,
