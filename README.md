@@ -2,7 +2,7 @@
 
 Super basic javascript live editor now with monacode.
 
-[Demo here](https://etcha.on.fleek.co)
+[Demo here](https://etcha-code.netlify.app/)
 
 Basically this:
 
