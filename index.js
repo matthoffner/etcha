@@ -1,5 +1,5 @@
 import * as monaco from './src/monaco/editor/editor.main.js';
-
+import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers';
 import prettier from './src/prettier.js';
 import prettierBabel from './src/prettier-babel.js';
 
@@ -7,6 +7,8 @@ const sheet = document.createElement('style');
 document.head.appendChild(sheet);
 
 sheet.innerHTML = '.monaco-editor { display: none; }';
+
+const transformer = await pipeline('text-generation', 'Xenova/codegen-350M-mono');
 
 fetch('./src/index.css')
   .then((res) => res.text())
@@ -90,8 +92,28 @@ export default (options) => {
     editor.layout();
   });
 
+  async function replaceSelectedText(text, appendAfterSelection = false) {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+      vscode.window.showErrorMessage('No active text editor found');
+      return;
+    }
+  
+    const selection = editor.selection;
+    const start = selection.start;
+    const end = selection.end;
+  
+    if (appendAfterSelection) {
+      const line = editor.document.lineAt(end.line);
+      const endOfLine = line.range.end;
+      await editor.edit(editBuilder => editBuilder.insert(endOfLine, text));
+    } else {
+      await editor.edit(editBuilder => editBuilder.replace(selection, text));
+    }
+  }  
+
   const alt = (e) => (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey);
-  const hotKeys = (e) => {
+  const hotKeys = async (e) => {
     // Cdm + s formats with prettier
     if (alt(e) && e.keyCode == 83) {
       e.preventDefault();
@@ -133,7 +155,13 @@ export default (options) => {
       e.preventDefault();
     }
     // Cmd + d prevents browser bookmark dialog
-    if (alt(e) && e.keyCode == 68) {
+    if (alt(e) && e.keyCode == 49) {
+      var selection = editor.getSelection();
+      var selectedText = selection.toString();
+      console.log(selectedText);
+      var codeResults = await transformer(selectedText);
+      console.log(codeResults);
+      replaceSelectedText(`\n${selectedText}`, codeResults);
       e.preventDefault();
     }
   };
@@ -142,3 +170,4 @@ export default (options) => {
 
   return editor;
 };
+
