@@ -72,24 +72,6 @@ const Etcha = () => {
         vertical: coords.vertical,
       });
     }
-  };
-  React.useEffect(() => {
-    window.addEventListener("keyup", (e) => handleKeyPress(e), false);
-    return () =>
-      window.addEventListener("keyup", (e) => handleKeyPress(e), false);
-  }, []);
-
-  return html\`<div style=\${{
-    backgroundColor: "#999",
-    textAlign: "center",
-    borderRadius: "5px",
-    border: "40px solid red",
-  }}><canvas style=\${{ width: '95vw', display: 'block' }} ref=\${canvasRef}></canvas></div>\`;
-};
-
-ReactDOM.render(html\`<\${Etcha} />\`, document.getElementById("root"));
-
-
 
 `.trim(),
       }

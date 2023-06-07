@@ -1,14 +1,13 @@
 import * as monaco from './src/monaco/editor/editor.main.js';
-import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers';
 import prettier from './src/prettier.js';
 import prettierBabel from './src/prettier-babel.js';
+import { MonacoEditorCopilot } from './src/copilot.js';
 
 const sheet = document.createElement('style');
 document.head.appendChild(sheet);
 
 sheet.innerHTML = '.monaco-editor { display: none; }';
 
-const transformer = await pipeline('text-generation', 'Xenova/codegen-350M-mono');
 
 fetch('./src/index.css')
   .then((res) => res.text())
@@ -75,6 +74,8 @@ export default (options) => {
     ...restOfOptions,
   });
 
+  const dispose = MonacoEditorCopilot(editor);
+
   // Import themes directly from the amazing collection by @brijeshb42
   // https://raw.githubusercontent.com/brijeshb42/monaco-themes/master/themes
 
@@ -91,26 +92,6 @@ export default (options) => {
   addEventListener('resize', function () {
     editor.layout();
   });
-
-  async function replaceSelectedText(text, appendAfterSelection = false) {
-    const editor = vscode.window.activeTextEditor;
-    if (!editor) {
-      vscode.window.showErrorMessage('No active text editor found');
-      return;
-    }
-  
-    const selection = editor.selection;
-    const start = selection.start;
-    const end = selection.end;
-  
-    if (appendAfterSelection) {
-      const line = editor.document.lineAt(end.line);
-      const endOfLine = line.range.end;
-      await editor.edit(editBuilder => editBuilder.insert(endOfLine, text));
-    } else {
-      await editor.edit(editBuilder => editBuilder.replace(selection, text));
-    }
-  }  
 
   const alt = (e) => (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey);
   const hotKeys = async (e) => {
@@ -150,18 +131,13 @@ export default (options) => {
       );
     }
     // Cmd + p opens the command palette
-    if (alt(e) && e.keyCode == 80) {
+    if (alt(e) && e.keyCode == 80) { 
       editor.trigger('anyString', 'editor.action.quickCommand');
+      dispose();
       e.preventDefault();
     }
     // Cmd + d prevents browser bookmark dialog
-    if (alt(e) && e.keyCode == 49) {
-      var selection = editor.getSelection();
-      var selectedText = selection.toString();
-      console.log(selectedText);
-      var codeResults = await transformer(selectedText);
-      console.log(codeResults);
-      replaceSelectedText(`\n${selectedText}`, codeResults);
+    if (alt(e) && e.keyCode == 76) {
       e.preventDefault();
     }
   };
