@@ -78,7 +78,7 @@ const handleCompletion = async (
   }
 };
 
-export const MonacoEditorCopilot = (
+const MonacoEditorCopilot = (
   editor,
   config
 ) => {
