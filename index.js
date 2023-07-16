@@ -1,7 +1,7 @@
 import * as monaco from './src/monaco/editor/editor.main.js';
 import prettier from './src/prettier.js';
 import prettierBabel from './src/prettier-babel.js';
-import copilot from './src/copilot.js';
+// import copilot from './src/copilot.js';
 
 const sheet = document.createElement('style');
 document.head.appendChild(sheet);
@@ -74,7 +74,7 @@ export default (options) => {
     ...restOfOptions,
   });
 
-  const dispose = copilot(editor);
+  // const dispose = copilot(editor);
 
   // Import themes directly from the amazing collection by @brijeshb42
   // https://raw.githubusercontent.com/brijeshb42/monaco-themes/master/themes
@@ -133,7 +133,7 @@ export default (options) => {
     // Cmd + p opens the command palette
     if (alt(e) && e.keyCode == 80) { 
       editor.trigger('anyString', 'editor.action.quickCommand');
-      dispose();
+      // dispose();
       e.preventDefault();
     }
     // Cmd + d prevents browser bookmark dialog
