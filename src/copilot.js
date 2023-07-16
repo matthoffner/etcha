@@ -1,5 +1,5 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers';
+import { pipeline } from '@xenova/transformers';
 
 async function fetchCompletionFromEdge(code, config, controller, handleInsertion) {
     const handleMessage = (message) => {
