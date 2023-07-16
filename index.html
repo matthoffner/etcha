@@ -17,62 +17,6 @@ import htm from "https://cdn.skypack.dev/htm";
 
 window.html = htm.bind(React.createElement);
 
-const Etcha = () => {
-  const KeyCodes = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
-  const [coordinates, setCoordinates] = React.useState({
-    vertical: 130,
-    horizontal: 60,
-  });
-  const canvasRef = React.useRef(null);
-  const coordinatesRef = React.useRef(coordinates);
-  const setActiveCoordinates = (data) => {
-    coordinatesRef.current = data;
-    setCoordinates(data);
-  };
-
-  const handleKeyPress = (e) => {
-    if (KeyCodes.includes(e.key)) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      ctx.fillStyle = "#000000";
-      let coords = {};
-      switch (e.key) {
-        case "ArrowUp":
-          coords = {
-            horizontal: coordinatesRef.current.horizontal,
-            vertical: coordinatesRef.current.vertical - 1,
-          };
-          break;
-        case "ArrowDown":
-          coords = {
-            horizontal: coordinatesRef.current.horizontal,
-            vertical: coordinatesRef.current.vertical + 1,
-          };
-          break;
-        case "ArrowRight":
-          coords = {
-            horizontal: coordinatesRef.current.horizontal + 1,
-            vertical: coordinatesRef.current.vertical,
-          };
-          break;
-
-        case "ArrowLeft":
-          coords = {
-            horizontal: coordinatesRef.current.horizontal - 1,
-            vertical: coordinatesRef.current.vertical,
-          };
-          break;
-
-        default:
-          break;
-      }
-      ctx.fillRect(coords.horizontal, coords.vertical, 1, 1);
-      setActiveCoordinates({
-        horizontal: coords.horizontal,
-        vertical: coords.vertical,
-      });
-    }
-
 `.trim(),
       }
 
