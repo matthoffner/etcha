@@ -1,7 +1,5 @@
 # Etcha
 
-javascript live monacode editor with experimental https://github.com/xenova/transformers.js support.
-
 [Demo here](https://etcha-code.netlify.app/)
 
 Basically this:
