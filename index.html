@@ -11,11 +11,57 @@
       const defaults = {
           container: document.getElementById('editor'),
           value: `
-          import React from "https://cdn.skypack.dev/react";
 import ReactDOM from "https://cdn.skypack.dev/react-dom";
+import React from "https://cdn.skypack.dev/react";
 import htm from "https://cdn.skypack.dev/htm";
+const html = htm.bind(React.createElement);
 
-window.html = htm.bind(React.createElement);
+function ExplainerPage() {
+  const styles = {
+    app: {
+      backgroundColor: 'teal',
+      fontFamily: 'Arial, sans-serif',
+      color: '#333',
+      padding: '1em',
+    },
+    navbar: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      borderBottom: '1px solid #ddd',
+      paddingBottom: '1em',
+    },
+    hero: {
+      margin: '2em 0',
+    },
+    howItWorks: {
+      margin: '2em 0',
+    }
+  };
+  
+  return html\`
+    <div style=${styles.app}>
+      <nav style=${styles.navbar}>
+        <h1>Etcha</h1>
+      </nav>
+      
+      <section style=${styles.hero}>
+        <h1>Welcome to Etcha</h1>
+        <p>Create modern web apps with React!</p>
+      </section>
+      
+      <section style=${styles.howItWorks}>
+        <h2>How does it work?</h2>
+        <ol>
+          <li>Start with a simple prompt or an existing component.</li>
+          <li>Let Etcha's AI assistant suggest improvements or generate code.</li>
+          <li>See your app come to life in real-time with our live React editor.</li>
+        </ol>
+      </section>
+    </div>
+  \`;
+}
+
+ReactDOM.render(html\`<${ExplainerPage} />\`, document.getElementById('root'));
 
 `.trim(),
       }
