@@ -15,32 +15,7 @@
     import React from "https://cdn.skypack.dev/react";
     import htm from "https://cdn.skypack.dev/htm";
     const html = htm.bind(React.createElement);
-
-    function ExplainerPage() {
-      return html\`
-        <div style=${{backgroundColor: 'teal', fontFamily: 'Arial, sans-serif', color: '#333', padding: '1em'}}>
-          <nav style=${{display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #ddd', paddingBottom: '1em'}}>
-            <h1>Etcha</h1>
-          </nav>
-          
-          <section style=${{margin: '2em 0'}}>
-            <h1>Welcome to Etcha</h1>
-            <p>Create modern web apps with React!</p>
-          </section>
-          
-          <section style=${{margin: '2em 0'}}>
-            <h2>How does it work?</h2>
-            <ol>
-              <li>Start with a simple prompt or an existing component.</li>
-              <li>Let Etcha's AI assistant suggest improvements or generate code.</li>
-              <li>See your app come to life in real-time with our live React editor.</li>
-            </ol>
-          </section>
-        </div>
-      \`;
-    }
-
-    ReactDOM.render(html\`<${ExplainerPage} />\`, document.getElementById('root'));
+    // ReactDOM.render(html\`<${MyComponent} />\`, document.getElementById('root'));
   `.trim()
 }
 
