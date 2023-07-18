@@ -10,12 +10,11 @@
       const overrides = Object.fromEntries(search);
       const defaults = {
   container: document.getElementById('editor'),
-  value: `
-    import ReactDOM from "https://cdn.skypack.dev/react-dom";
-    import React from "https://cdn.skypack.dev/react";
-    import htm from "https://cdn.skypack.dev/htm";
-    const html = htm.bind(React.createElement);
-    // ReactDOM.render(, document.getElementById('root'));
+  value: `import ReactDOM from "https://cdn.skypack.dev/react-dom";
+  import React from "https://cdn.skypack.dev/react";
+  import htm from "https://cdn.skypack.dev/htm";
+  const html = htm.bind(React.createElement);
+  // ReactDOM.render(html, document.getElementById('root'));
   `.trim()
 }
 
